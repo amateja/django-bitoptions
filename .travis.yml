@@ -1,0 +1,35 @@
+language: python
+python:
+  - 2.7
+  - 3.2
+  - 3.3
+  - 3.4
+  - 3.5
+  - pypy
+  - pypy3
+install: pip install coveralls $DJANGO
+env:
+  - DJANGO='django>=1.8,<1.9' DB=mariadb
+  - DJANGO='django>=1.8,<1.9' DB=mysql
+  - DJANGO='django>=1.8,<1.9' DB=postgres
+  - DJANGO='django>=1.8,<1.9' DB=sqlite
+
+  - DJANGO='django>=1.9,<1.10' DB=mariadb
+  - DJANGO='django>=1.9,<1.10' DB=mysql
+  - DJANGO='django>=1.9,<1.10' DB=postgres
+  - DJANGO='django>=1.9,<1.10' DB=sqlite
+matrix:
+  exclude:
+    - python: 3.2
+      env: DJANGO='django>=1.9,<1.10'
+    - python: 3.3
+      env: DJANGO='django>=1.9,<1.10'
+    - python: pypy3
+      env: DJANGO='django>=1.9,<1.10'
+before_script:
+  - if [[ $DB = 'postgres' ]]; then psql -c 'create database bitoptions;' -U postgres; fi
+  - if [[ $DB = 'mysql' ]]; then mysql -e 'create database bitoptions'; fi
+  - if [[ $DB = 'mariadb' ]]; then mysql -e 'create database bitoptions'; fi
+script: coverage run --source=bitoptions testproject/manage.py test bitoptions testapp
+after_success:
+  coveralls
