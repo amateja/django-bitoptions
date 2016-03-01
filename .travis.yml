@@ -8,7 +8,8 @@ python:
   - pypy
   - pypy3
 install:
-  - if [[ $TRAVIS_PYTHON_VERSION = 'pypy3' || $TRAVIS_PYTHON_VERSION = '3.2']]; then pip install 'coverage<4.0.0'; fi
+  - if [[ $TRAVIS_PYTHON_VERSION = '3.2' ]]; then pip install 'coverage<4.0.0'; fi
+  - if [[ $TRAVIS_PYTHON_VERSION = 'pypy3' ]]; then pip install 'coverage<4.0.0'; fi
   - pip install coveralls $DJANGO
   - if [[ $DB = 'mariadb' ]]; then pip install mysqlclient; fi
   - if [[ $DB = 'mysql' ]]; then pip install mysqlclient; fi
