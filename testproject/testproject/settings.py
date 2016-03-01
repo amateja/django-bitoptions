@@ -61,6 +61,8 @@ if DB in ['mariadb', 'mysql']:
         }
     }
 elif DB == 'postgres':
+    from psycopg2cffi import compat
+    compat.register()
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
