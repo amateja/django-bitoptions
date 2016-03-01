@@ -63,7 +63,7 @@ if DB in ['mariadb', 'mysql']:
 elif DB == 'postgres':
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'testproject',
             'USER': 'travis',
             'PASSWORD': '',

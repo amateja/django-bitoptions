@@ -7,7 +7,11 @@ python:
   - 3.5
   - pypy
   - pypy3
-install: pip install coveralls $DJANGO
+install:
+  - pip install coveralls $DJANGO
+  - if [[ $DB = 'mariadb' ]]; then pip install mysqlclient; fi
+  - if [[ $DB = 'mysql' ]]; then pip install mysqlclient; fi
+  - if [[ $DB = 'postgres' ]]; then pip install psycopg2; fi
 env:
   - DJANGO='django>=1.8,<1.9' DB=mariadb
   - DJANGO='django>=1.8,<1.9' DB=mysql
@@ -21,15 +25,33 @@ env:
 matrix:
   exclude:
     - python: 3.2
-      env: DJANGO='django>=1.9,<1.10'
+      env: DJANGO='django>=1.9,<1.10' DB=mariadb
+    - python: 3.2
+      env: DJANGO='django>=1.9,<1.10' DB=mysql
+    - python: 3.2
+      env: DJANGO='django>=1.9,<1.10' DB=postgres
+    - python: 3.2
+      env: DJANGO='django>=1.9,<1.10' DB=sqlite
     - python: 3.3
-      env: DJANGO='django>=1.9,<1.10'
+      env: DJANGO='django>=1.9,<1.10' DB=mariadb
+    - python: 3.3
+      env: DJANGO='django>=1.9,<1.10' DB=mysql
+    - python: 3.3
+      env: DJANGO='django>=1.9,<1.10' DB=postgres
+    - python: 3.3
+      env: DJANGO='django>=1.9,<1.10' DB=sqlite
     - python: pypy3
-      env: DJANGO='django>=1.9,<1.10'
+      env: DJANGO='django>=1.9,<1.10' DB=mariadb
+    - python: pypy3
+      env: DJANGO='django>=1.9,<1.10' DB=mysql
+    - python: pypy3
+      env: DJANGO='django>=1.9,<1.10' DB=postgres
+    - python: pypy3
+      env: DJANGO='django>=1.9,<1.10' DB=sqlite
 before_script:
-  - if [[ $DB = 'postgres' ]]; then psql -c 'create database bitoptions;' -U postgres; fi
-  - if [[ $DB = 'mysql' ]]; then mysql -e 'create database bitoptions'; fi
   - if [[ $DB = 'mariadb' ]]; then mysql -e 'create database bitoptions'; fi
+  - if [[ $DB = 'mysql' ]]; then mysql -e 'create database bitoptions'; fi
+  - if [[ $DB = 'postgres' ]]; then psql -c 'create database bitoptions;' -U postgres; fi
 script: coverage run --source=bitoptions testproject/manage.py test bitoptions testapp
 after_success:
   coveralls
