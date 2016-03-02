@@ -44,4 +44,24 @@ class SimpleBitOptionsField(IntegerField):
         return name, path, args, kwargs
 
 
+class BitOptionsField(SimpleBitOptionsField):
+    def from_db_value(self, value, expression, connection, context):
+        return self.to_python(value)
+
+    def to_python(self, value):
+        if value is None:
+            return value
+        value = super(BitOptionsField, self).to_python(value)
+        return BitOptions(self.options.flags, value)
+
+    def get_prep_value(self, value):
+        if isinstance(value, BitOptions):
+            return value.value
+        return value
+
+    def get_prep_lookup(self, lookup_type, value):
+        value = self.get_prep_value(value)
+        return super(BitOptionsField, self).get_prep_lookup(lookup_type, value)
+
+
 SimpleBitOptionsField.register_lookup(BitwiseAnd)

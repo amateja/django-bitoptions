@@ -1,5 +1,5 @@
 from django.db import models
-from bitoptions import BitOptions, SimpleBitOptionsField
+from bitoptions import BitOptions, BitOptionsField
 
 TOPPINGS = BitOptions(
     ('pepperoni', 'mushrooms', 'onions', 'sausage', 'bacon', 'black olives',
@@ -8,8 +8,13 @@ TOPPINGS = BitOptions(
      'salami')
 )
 CHEESES = BitOptions(('feta', 'parmesan', 'provolone', 'goat', 'mozzarella'))
+COLORS = BitOptions(('red', 'green', 'blue'))
+
+
+class Box(models.Model):
+    colors = BitOptionsField(options=COLORS, null=True, blank=True)
 
 
 class Pizza(models.Model):
-    toppings = SimpleBitOptionsField(options=TOPPINGS)
-    cheeses = SimpleBitOptionsField(options=CHEESES)
+    toppings = BitOptionsField(options=TOPPINGS)
+    cheeses = BitOptionsField(options=CHEESES)

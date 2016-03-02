@@ -2,10 +2,10 @@ from django.http import QueryDict
 from django.test import TestCase
 from django.contrib.admin.sites import AdminSite
 from django.contrib.admin.options import ModelAdmin
-from bitoptions import BitOptions, SimpleBitOptionsField, BinaryWidget
+from bitoptions import BitOptions, BitOptionsField, BinaryWidget
 from bitoptions.utils import number2powers
 
-from .models import Pizza, TOPPINGS
+from .models import TOPPINGS, Box, Pizza
 
 
 class MockRequest(object):
@@ -31,7 +31,7 @@ class ModelAdminTests(TestCase):
         self.assertEqual(ma.get_fields(request), ['toppings', 'cheeses'])
 
     def test_xxl(self):
-        self.assertRaises(ValueError, SimpleBitOptionsField, options=range(0, 99))
+        self.assertRaises(ValueError, BitOptionsField, options=range(0, 99))
 
     def test_bitoptions_empty(self):
         self.assertEqual(BitOptions(()).max, 0)
@@ -60,8 +60,8 @@ class ModelAdminTests(TestCase):
             TOPPINGS.get_value(['onions', 'green olives', 'salami']), 131140)
 
     def test_large(self):
-        field = SimpleBitOptionsField(options=range(0, 40))
-        self.assertEqual(field._check_max_length_warning(), [])
+        field = BitOptionsField(options=range(0, 40), null=True)
+        self.assertEqual('BigIntegerField', field.get_internal_type())
 
     def test_widget_render(self):
         widget = BinaryWidget()
@@ -79,7 +79,12 @@ class ModelAdminTests(TestCase):
             widget.value_from_datadict(QueryDict(qd), {}, 'cheeses'), 17)
 
     def test_lookup(self):
+        toppings = BitOptions(TOPPINGS.flags, 10)
         p = Pizza.objects.create(toppings=30, cheeses=18)
         Pizza.objects.create(toppings=20, cheeses=18)
-        self.assertEqual(Pizza.objects.get(toppings__bitwise_and=10).id, p.id)
-        p.clean()
+        self.assertEqual(Pizza.objects.get(toppings__bitwise_and=toppings).id, p.id)
+
+    def test_null(self):
+        Box.objects.create(colors=None)
+        b = Box.objects.get()
+        self.assertIsNone(b.colors)
