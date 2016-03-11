@@ -119,23 +119,28 @@ class BitOptionFieldTests(TestCase):
         field = BitOptionsField(options=range(0, 40), null=True)
         self.assertEqual('BigIntegerField', field.get_internal_type())
 
-    def widget_render(self, value):
+    def test_widget_render_int(self):
         """
-        Executes tests of BitOptionsWidget.render method.
+        Tests BitOptionsWidget.render method with integer value.
         """
         widget = BitOptionsWidget()
-        html = widget.render('toppings', value, {'id': 'id_toppings'},
+        html = widget.render('toppings', 131140, {'id': 'id_toppings'},
                              TOPPINGS)
         self.assertEqual(html.count('<li>'), len(TOPPINGS))
         self.assertEqual(html.count('checked="checked"'),
                          len(TOPPINGS.get_selected_values(131140)))
 
-    def test_widget_render_int(self):
-        self.widget_render(131140)
-
     def test_widget_render_bitoptions(self):
+        """
+        Tests BitOptionsWidget.render method with BitOptions object.
+        """
         TOPPINGS.value = 131140
-        self.widget_render(TOPPINGS)
+        widget = BitOptionsWidget()
+        html = widget.render('toppings', TOPPINGS, {'id': 'id_toppings'},
+                             TOPPINGS)
+        self.assertEqual(html.count('<li>'), len(TOPPINGS))
+        self.assertEqual(html.count('checked="checked"'),
+                         len(TOPPINGS.get_selected_values(131140)))
 
     def test_widget_value_from_datadict(self):
         """
