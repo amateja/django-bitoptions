@@ -6,6 +6,9 @@ import bitoptions.fields
 
 
 class Migration(migrations.Migration):
+    """
+    Initial migration class.
+    """
 
     dependencies = [
     ]

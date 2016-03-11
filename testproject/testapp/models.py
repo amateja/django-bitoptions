@@ -12,9 +12,15 @@ COLORS = BitOptions(('red', 'green', 'blue'))
 
 
 class Box(models.Model):
+    """
+    Test model with nullable BitOptionsField.
+    """
     colors = BitOptionsField(options=COLORS, null=True, blank=True)
 
 
 class Pizza(models.Model):
+    """
+    Test model with small and medium size list of options.
+    """
     toppings = BitOptionsField(options=TOPPINGS)
     cheeses = BitOptionsField(options=CHEESES)
