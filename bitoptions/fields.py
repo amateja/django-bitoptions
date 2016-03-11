@@ -88,16 +88,15 @@ class BitOptionsField(SimpleBitOptionsField):
         value = super(BitOptionsField, self).to_python(value)
         return BitOptions(self.options.flags, value)
 
-    @staticmethod
-    def get_prep_value(value):
+    def get_prep_value(self, value):
         """
         Takes current value of the model's attribute, and the method returns
         data in a format that has been prepared for use as a parameter in
         a query.
         """
         if isinstance(value, BitOptions):
-            return value.value
-        return value
+            return super(BitOptionsField, self).get_prep_value(value.value)
+        return super(BitOptionsField, self).get_prep_value(value)
 
     def get_prep_lookup(self, lookup_type, value):
         """
