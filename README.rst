@@ -4,6 +4,16 @@
     :target: https://coveralls.io/github/amateja/django-bitoptions
 .. image:: https://www.quantifiedcode.com/api/v1/project/9d2810191a234414a3edf7843f5d1c1c/badge.svg
     :target: https://www.quantifiedcode.com/app/project/9d2810191a234414a3edf7843f5d1c1c
+.. image:: https://img.shields.io/pypi/v/django-bitoptions.svg
+    :target: https://pypi.python.org/pypi/django-bitoptions
+.. image:: https://img.shields.io/pypi/format/django-bitoptions.svg
+    :target: https://pypi.python.org/pypi/django-bitoptions
+.. image:: https://img.shields.io/pypi/pyversions/django-bitoptions.svg
+    :target: https://pypi.python.org/pypi/django-bitoptions
+.. image:: https://img.shields.io/pypi/status/django-bitoptions.svg
+    :target: https://pypi.python.org/pypi/django-bitoptions
+.. image:: https://img.shields.io/pypi/l/django-bitoptions.svg
+    :target: https://pypi.python.org/pypi/django-bitoptions
 
 =================
 django-bitoptions
