@@ -47,6 +47,10 @@ class BitOptions(object):
         return [v for b, v in self._options if b & selection]
 
     def _initialize_lookup(self):
+        """
+        Initializes self._lookup dict only if needed to let self.flags be
+        a list of translatable strings.
+        """
         self._lookup = {}
         for index, val in enumerate(self.flags):
             self._lookup[val] = 1 << index
