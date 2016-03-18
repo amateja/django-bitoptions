@@ -11,10 +11,7 @@ def number2powers(n):
     for c in map(int, x):
         i -= 1
         if c:
-            try:
-                result.append(2 << i - 1)
-            except ValueError:
-                result.append(1)
+            result.append(1 << i)
     return result
 
 
@@ -23,16 +20,11 @@ class BitOptions(object):
     Stores a list of options with theirs weights as a powers of 2.
     """
     def __init__(self, options, value=None):
-        self.flags = tuple(map(str, options))
+        self.flags = options
         self._options = []
-        self._lookup = {}
+        self._lookup = None
         for index, val in enumerate(self.flags):
-            try:
-                index = 2 << index - 1
-            except ValueError:
-                index = 1
-            self._options.append((index, val))
-            self._lookup[val] = index
+            self._options.append((1 << index, val))
         if value is None:
             self.value = self.maximum_value
         else:
@@ -54,6 +46,11 @@ class BitOptions(object):
             selection = self.value
         return [v for b, v in self._options if b & selection]
 
+    def _initialize_lookup(self):
+        self._lookup = {}
+        for index, val in enumerate(self.flags):
+            self._lookup[val] = 1 << index
+
     def get_value(self, vector):
         """
         Converts a list of options to sum of theirs weights.
@@ -61,6 +58,8 @@ class BitOptions(object):
         :type vector: iterable
         :return: int as a sum of weights of given options' list
         """
+        if self._lookup is None:
+            self._initialize_lookup()
         return sum([self._lookup.get(i, 0) for i in set(vector)])
 
     def set_value(self, vector):
@@ -76,7 +75,4 @@ class BitOptions(object):
         """
         Returns maximal value which is when all options are set.
         """
-        try:
-            return (2 << len(self) - 1) - 1
-        except ValueError:
-            return 0
+        return (1 << len(self)) - 1
