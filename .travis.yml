@@ -5,6 +5,8 @@ python:
   - 3.3
   - 3.4
   - 3.5
+  - 3.6
+  - 3.7-dev
   - pypy
   - pypy3
 install:
@@ -23,8 +25,60 @@ env:
   - DJANGO='django>=1.9,<1.10' DB=mysql
   - DJANGO='django>=1.9,<1.10' DB=postgres
   - DJANGO='django>=1.9,<1.10' DB=sqlite
+
+  - DJANGO='django>=1.10,<1.11' DB=mariadb
+  - DJANGO='django>=1.10,<1.11' DB=mysql
+  - DJANGO='django>=1.10,<1.11' DB=postgres
+  - DJANGO='django>=1.10,<1.11' DB=sqlite
+
+  - DJANGO='django>=1.11,<2' DB=mariadb
+  - DJANGO='django>=1.11,<2' DB=mysql
+  - DJANGO='django>=1.11,<2' DB=postgres
+  - DJANGO='django>=1.11,<2' DB=sqlite
+
+  - DJANGO='django>=2,<2.1' DB=mariadb
+  - DJANGO='django>=2,<2.1' DB=mysql
+  - DJANGO='django>=2,<2.1' DB=postgres
+  - DJANGO='django>=2,<2.1' DB=sqlite
+
+  - DJANGO='--pre django' DB=mariadb
+  - DJANGO='--pre django' DB=mysql
+  - DJANGO='--pre django' DB=postgres
+  - DJANGO='--pre django' DB=sqlite
 matrix:
   exclude:
+    - python: pypy
+      env: DJANGO='django>=2,<2.1' DB=mariadb
+    - python: pypy
+      env: DJANGO='django>=2,<2.1' DB=mysql
+    - python: pypy
+      env: DJANGO='django>=2,<2.1' DB=postgres
+    - python: pypy
+      env: DJANGO='django>=2,<2.1' DB=sqlite
+    - python: pypy
+      env: DJANGO='--pre django' DB=mariadb
+    - python: pypy
+      env: DJANGO='--pre django' DB=mysql
+    - python: pypy
+      env: DJANGO='--pre django' DB=postgres
+    - python: pypy
+      env: DJANGO='--pre django' DB=sqlite
+    - python: 2.7
+      env: DJANGO='django>=2,<2.1' DB=mariadb
+    - python: 2.7
+      env: DJANGO='django>=2,<2.1' DB=mysql
+    - python: 2.7
+      env: DJANGO='django>=2,<2.1' DB=postgres
+    - python: 2.7
+      env: DJANGO='django>=2,<2.1' DB=sqlite
+    - python: 2.7
+      env: DJANGO='--pre django' DB=mariadb
+    - python: 2.7
+      env: DJANGO='--pre django' DB=mysql
+    - python: 2.7
+      env: DJANGO='--pre django' DB=postgres
+    - python: 2.7
+      env: DJANGO='--pre django' DB=sqlite
     - python: 3.2
       env: DJANGO='django>=1.8,<1.9' DB=mariadb
     - python: 3.2
@@ -37,6 +91,38 @@ matrix:
       env: DJANGO='django>=1.9,<1.10' DB=postgres
     - python: 3.2
       env: DJANGO='django>=1.9,<1.10' DB=sqlite
+    - python: 3.2
+      env: DJANGO='django>=1.10,<1.11' DB=mariadb
+    - python: 3.2
+      env: DJANGO='django>=1.10,<1.11' DB=mysql
+    - python: 3.2
+      env: DJANGO='django>=1.10,<1.11' DB=postgres
+    - python: 3.2
+      env: DJANGO='django>=1.10,<1.11' DB=sqlite
+    - python: 3.2
+      env: DJANGO='django>=1.11,<2' DB=mariadb
+    - python: 3.2
+      env: DJANGO='django>=1.11,<2' DB=mysql
+    - python: 3.2
+      env: DJANGO='django>=1.11,<2' DB=postgres
+    - python: 3.2
+      env: DJANGO='django>=1.11,<2' DB=sqlite
+    - python: 3.2
+      env: DJANGO='django>=2,<2.1' DB=mariadb
+    - python: 3.2
+      env: DJANGO='django>=2,<2.1' DB=mysql
+    - python: 3.2
+      env: DJANGO='django>=2,<2.1' DB=postgres
+    - python: 3.2
+      env: DJANGO='django>=2,<2.1' DB=sqlite
+    - python: 3.2
+      env: DJANGO='--pre django' DB=mariadb
+    - python: 3.2
+      env: DJANGO='--pre django' DB=mysql
+    - python: 3.2
+      env: DJANGO='--pre django' DB=postgres
+    - python: 3.2
+      env: DJANGO='--pre django' DB=sqlite
     - python: 3.3
       env: DJANGO='django>=1.9,<1.10' DB=mariadb
     - python: 3.3
@@ -45,6 +131,62 @@ matrix:
       env: DJANGO='django>=1.9,<1.10' DB=postgres
     - python: 3.3
       env: DJANGO='django>=1.9,<1.10' DB=sqlite
+    - python: 3.3
+      env: DJANGO='django>=1.10,<1.11' DB=mariadb
+    - python: 3.3
+      env: DJANGO='django>=1.10,<1.11' DB=mysql
+    - python: 3.3
+      env: DJANGO='django>=1.10,<1.11' DB=postgres
+    - python: 3.3
+      env: DJANGO='django>=1.10,<1.11' DB=sqlite
+    - python: 3.3
+      env: DJANGO='django>=1.11,<2' DB=mariadb
+    - python: 3.3
+      env: DJANGO='django>=1.11,<2' DB=mysql
+    - python: 3.3
+      env: DJANGO='django>=1.11,<2' DB=postgres
+    - python: 3.3
+      env: DJANGO='django>=1.11,<2' DB=sqlite
+    - python: 3.3
+      env: DJANGO='django>=2,<2.1' DB=mariadb
+    - python: 3.3
+      env: DJANGO='django>=2,<2.1' DB=mysql
+    - python: 3.3
+      env: DJANGO='django>=2,<2.1' DB=postgres
+    - python: 3.3
+      env: DJANGO='django>=2,<2.1' DB=sqlite
+    - python: 3.3
+      env: DJANGO='--pre django' DB=mariadb
+    - python: 3.3
+      env: DJANGO='--pre django' DB=mysql
+    - python: 3.3
+      env: DJANGO='--pre django' DB=postgres
+    - python: 3.3
+      env: DJANGO='--pre django' DB=sqlite
+
+    # python 3.7 @ django 1.11 fails
+    - python: 3.7-dev
+      env: DJANGO='django>=1.11,<2' DB=mariadb
+    - python: 3.7-dev
+      env: DJANGO='django>=1.11,<2' DB=mysql
+    - python: 3.7-dev
+      env: DJANGO='django>=1.11,<2' DB=postgres
+    - python: 3.7-dev
+      env: DJANGO='django>=1.11,<2' DB=sqlite
+
+    # psycopg2cffi fails on python 3.7
+    - python: 3.7-dev
+      env: DJANGO='django>=1.8,<1.9' DB=postgres
+    - python: 3.7-dev
+      env: DJANGO='django>=1.9,<1.10' DB=postgres
+    - python: 3.7-dev
+      env: DJANGO='django>=1.10,<1.11' DB=postgres
+    - python: 3.7-dev
+      env: DJANGO='django>=1.11,<2' DB=postgres
+    - python: 3.7-dev
+      env: DJANGO='django>=2,<2.1' DB=postgres
+    - python: 3.7-dev
+      env: DJANGO='--pre django' DB=postgres
 before_script:
   - if [[ $DB = 'mariadb' ]]; then mysql -e 'create database bitoptions'; fi
   - if [[ $DB = 'mysql' ]]; then mysql -e 'create database bitoptions'; fi
