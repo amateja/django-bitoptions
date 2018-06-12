@@ -123,11 +123,10 @@ class BitOptionFieldTests(TestCase):
         """
         Tests BitOptionsWidget.render method with integer value.
         """
-        widget = BitOptionsWidget()
-        html = widget.render('toppings', 131140, {'id': 'id_toppings'},
-                             TOPPINGS)
+        widget = BitOptionsWidget(choices=TOPPINGS)
+        html = widget.render('toppings', 131140, {'id': 'id_toppings'})
         self.assertEqual(html.count('<li>'), len(TOPPINGS))
-        self.assertEqual(html.count('checked="checked"'),
+        self.assertEqual(html.count(' checked'),
                          len(TOPPINGS.get_selected_values(131140)))
 
     def test_widget_render_bitoptions(self):
@@ -135,11 +134,10 @@ class BitOptionFieldTests(TestCase):
         Tests BitOptionsWidget.render method with BitOptions object.
         """
         TOPPINGS.value = 131140
-        widget = BitOptionsWidget()
-        html = widget.render('toppings', TOPPINGS, {'id': 'id_toppings'},
-                             TOPPINGS)
+        widget = BitOptionsWidget(choices=TOPPINGS)
+        html = widget.render('toppings', TOPPINGS, {'id': 'id_toppings'})
         self.assertEqual(html.count('<li>'), len(TOPPINGS))
-        self.assertEqual(html.count('checked="checked"'),
+        self.assertEqual(html.count(' checked'),
                          len(TOPPINGS.get_selected_values(131140)))
 
     def test_widget_value_from_datadict(self):
