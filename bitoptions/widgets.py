@@ -16,7 +16,7 @@ class BitOptionsWidget(forms.CheckboxSelectMultiple):
         return sum(map(int, super(BitOptionsWidget, self).value_from_datadict(
             data, files, name)))
 
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, renderer=None):
         """
         Returns HTML for the widget, as a Unicode string.
         """
@@ -24,4 +24,8 @@ class BitOptionsWidget(forms.CheckboxSelectMultiple):
             value = number2powers(value.value)
         elif isinstance(value, int):
             value = number2powers(value)
-        return super(BitOptionsWidget, self).render(name, value, attrs, choices)
+        try:
+            return super(BitOptionsWidget, self).render(name, value,
+                                                        attrs, renderer)
+        except TypeError:
+            return super(BitOptionsWidget, self).render(name, value, attrs)
