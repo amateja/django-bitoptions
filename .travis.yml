@@ -9,7 +9,6 @@ python:
   - pypy3
 install:
   - if [[ $TRAVIS_PYTHON_VERSION = '3.2' ]]; then pip install 'coverage<4.0.0'; fi
-  - if [[ $TRAVIS_PYTHON_VERSION = 'pypy3' ]]; then pip install 'coverage<4.0.0'; fi
   - pip install coveralls $DJANGO
   - if [[ $DB = 'mariadb' ]]; then pip install mysqlclient; fi
   - if [[ $DB = 'mysql' ]]; then pip install mysqlclient; fi
@@ -45,18 +44,6 @@ matrix:
     - python: 3.3
       env: DJANGO='django>=1.9,<1.10' DB=postgres
     - python: 3.3
-      env: DJANGO='django>=1.9,<1.10' DB=sqlite
-    - python: pypy3
-      env: DJANGO='django>=1.8,<1.9' DB=mariadb
-    - python: pypy3
-      env: DJANGO='django>=1.8,<1.9' DB=mysql
-    - python: pypy3
-      env: DJANGO='django>=1.9,<1.10' DB=mariadb
-    - python: pypy3
-      env: DJANGO='django>=1.9,<1.10' DB=mysql
-    - python: pypy3
-      env: DJANGO='django>=1.9,<1.10' DB=postgres
-    - python: pypy3
       env: DJANGO='django>=1.9,<1.10' DB=sqlite
 before_script:
   - if [[ $DB = 'mariadb' ]]; then mysql -e 'create database bitoptions'; fi
