@@ -64,7 +64,7 @@ class BitOptions(object):
         """
         if self._lookup is None:
             self._initialize_lookup()
-        return sum([self._lookup.get(i, 0) for i in set(vector)])
+        return sum(self._lookup.get(i, 0) for i in set(vector))
 
     def set_value(self, vector):
         """
