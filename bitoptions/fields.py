@@ -1,9 +1,9 @@
 from django.db.models import IntegerField
 from django.utils.translation import ugettext_lazy as _
 
+from .forms import BitOptionsForm
 from .lookups import BitwiseAnd
 from .utils import BitOptions
-from .forms import BitOptionsForm
 
 
 class SimpleBitOptionsField(IntegerField):
