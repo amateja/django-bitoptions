@@ -5,14 +5,11 @@ def number2powers(n):
     :type n: int
     :return: list of powers of 2
     """
-    x = bin(n)[2:]
-    i = len(x)
-    result = []
-    for c in map(int, x):
-        i -= 1
-        if c:
-            result.append(1 << i)
-    return result
+    s = 1
+    while n >= s:
+        if n & s:
+            yield s
+        s <<= 1
 
 
 class BitOptions(object):

@@ -21,9 +21,9 @@ class BitOptionsWidget(forms.CheckboxSelectMultiple):
         Returns HTML for the widget, as a Unicode string.
         """
         if isinstance(value, BitOptions):
-            value = number2powers(value.value)
+            value = list(number2powers(value.value))
         elif isinstance(value, int):
-            value = number2powers(value)
+            value = list(number2powers(value))
         try:
             return super(BitOptionsWidget, self).render(name, value,
                                                         attrs, renderer)

@@ -95,7 +95,7 @@ class BitOptionFieldTests(TestCase):
         """
         Tests number2powers function.
         """
-        self.assertEqual(number2powers(127), [64, 32, 16, 8, 4, 2, 1])
+        self.assertEqual(sum(number2powers(127)), 127)
 
     def test_bitoptions_get_selected_values(self):
         """
