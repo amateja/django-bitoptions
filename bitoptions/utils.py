@@ -5,14 +5,11 @@ def number2powers(n):
     :type n: int
     :return: list of powers of 2
     """
-    x = bin(n)[2:]
-    i = len(x)
-    result = []
-    for c in map(int, x):
-        i -= 1
-        if c:
-            result.append(1 << i)
-    return result
+    s = 1
+    while n >= s:
+        if n & s:
+            yield s
+        s <<= 1
 
 
 class BitOptions(object):
@@ -21,10 +18,9 @@ class BitOptions(object):
     """
     def __init__(self, options, value=None):
         self.flags = options
-        self._options = []
+        self._options = [(1 << index, val)
+                         for index, val in enumerate(options)]
         self._lookup = None
-        for index, val in enumerate(self.flags):
-            self._options.append((1 << index, val))
         if value is None:
             self.value = self.maximum_value
         else:
@@ -46,15 +42,6 @@ class BitOptions(object):
             selection = self.value
         return [v for b, v in self._options if b & selection]
 
-    def _initialize_lookup(self):
-        """
-        Initializes self._lookup dict only if needed to let self.flags be
-        a list of translatable strings.
-        """
-        self._lookup = {}
-        for index, val in enumerate(self.flags):
-            self._lookup[val] = 1 << index
-
     def get_value(self, vector):
         """
         Converts a list of options to sum of theirs weights.
@@ -63,7 +50,7 @@ class BitOptions(object):
         :return: int as a sum of weights of given options' list
         """
         if self._lookup is None:
-            self._initialize_lookup()
+            self._lookup = {label: value for value, label in self._options}
         return sum(self._lookup.get(i, 0) for i in set(vector))
 
     def set_value(self, vector):
