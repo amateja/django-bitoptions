@@ -32,6 +32,9 @@ class BitOptions(object):
     def __len__(self):
         return len(self._options)
 
+    def __int__(self):
+        return self.value
+
     def get_selected_values(self, selection=None):
         """
         Returns a list of options for the given selection.
