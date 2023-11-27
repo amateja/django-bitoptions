@@ -1,5 +1,5 @@
 from django.db.models import IntegerField
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from .forms import BitOptionsForm
 from .lookups import BitwiseAnd
