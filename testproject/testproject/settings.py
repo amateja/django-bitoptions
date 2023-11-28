@@ -51,6 +51,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'testproject.wsgi.application'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 DB = os.environ.get('DB', 'sqlite')
 
 if DB in ['mariadb', 'mysql']:
