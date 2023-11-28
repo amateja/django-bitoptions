@@ -3,12 +3,29 @@ name: Python test
 on: [push, pull_request]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        python -m pip install flake8 flake8-comprehensions flake8-eradicate flake8-pep3101 flake8-print flake8-quotes flake8-string-format
+    - name: Lint with flake8
+      run: flake8
   test:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11"]
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+        django: ['>=4.1,<4.2', '>=4.2,<4.3']
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -18,11 +35,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        python -m pip install coverage flake8 flake8-comprehensions flake8-eradicate flake8-pep3101 flake8-print flake8-quotes flake8-string-format
-        python -m pip install django
-    - name: Lint with flake8
-      run: flake8
+        python -m pip install coverage 'django${{ matrix.django }}'
     - name: Execute tests with coverage
       run: |
         coverage run --source=bitoptions testproject/manage.py test testapp
         coverage report
+
