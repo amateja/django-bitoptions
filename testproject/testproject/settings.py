@@ -60,8 +60,10 @@ if DB in ['mariadb', 'mysql']:
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'testproject',
-            'USER': 'travis',
-            'PASSWORD': '',
+            'USER': 'root',
+            'PASSWORD': 'password',
+            'HOST': '127.0.0.1',
+            'PORT': 3306
         }
     }
 elif DB == 'postgres':
@@ -74,7 +76,7 @@ elif DB == 'postgres':
             'NAME': 'testproject',
             'USER': 'postgres',
             'PASSWORD': 'postgres',
-            'HOST': 'localhost',
+            'HOST': '127.0.0.1',
             'PORT': 5432
         }
     }
