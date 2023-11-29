@@ -39,7 +39,18 @@ jobs:
     - name: Execute tests with coverage
       run: |
         coverage run --source=bitoptions testproject/manage.py test testapp
+        coverage lcov
         coverage report
     - name: Coveralls
       uses: coverallsapp/github-action@v2
+      with:
+        parallel: true
 
+  generate-coverage-report:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          parallel-finished: true
