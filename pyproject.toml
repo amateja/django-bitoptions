@@ -1,0 +1,67 @@
+[build-system]
+requires = ['setuptools>=61.0']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'django-bitoptions'
+dynamic = ['version']
+authors = [
+  {name = "Andrzej Mateja", email = "mateja.and@gmail.com"}
+]
+maintainers = [
+  {name = "Andrzej Mateja", email = "mateja.and@gmail.com"}
+]
+description = """This project replaces several related BooleanFields with \
+    a single field and a few eye candy features."""
+readme = 'README.rst'
+license = {file = 'LICENSE'}
+requires-python = '>=2.7'
+keywords=["django", "bit options", "bitoptions"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Django :: 1.8",
+    "Framework :: Django :: 1.9",
+    "Framework :: Django :: 1.10",
+    "Framework :: Django :: 1.11",
+    "Framework :: Django :: 2.0",
+    "Framework :: Django :: 2.1",
+    "Framework :: Django :: 2.2",
+    "Framework :: Django :: 3.0",
+    "Framework :: Django :: 3.1",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.0",
+    "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
+    "Intended Audience :: Developers",
+    "License :: Public Domain",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.2",
+    "Programming Language :: Python :: 3.3",
+    "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Software Development"
+]
+dependencies = [
+  "django>=1.8"
+]
+
+[project.urls]
+homepage = "https://github.com/amateja/django-bitoptions"
+
+[tool.setuptools.dynamic]
+version = {attr = 'bitoptions.__version__'}
+
+[tool.setuptools.packages]
+find = {namespaces = false}

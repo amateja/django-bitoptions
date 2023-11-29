@@ -1,5 +1,5 @@
-.. image:: https://img.shields.io/travis/amateja/django-bitoptions.svg
-    :target: https://travis-ci.org/amateja/django-bitoptions
+.. image:: https://img.shields.io/github/actions/workflow/status/amateja/django-bitoptions/python-test.yml
+    :target: https://github.com/amateja/django-bitoptions/actions/workflows/python-test.yml
 .. image:: https://img.shields.io/coveralls/amateja/django-bitoptions.svg
     :target: https://coveralls.io/github/amateja/django-bitoptions
 .. image:: https://img.shields.io/pypi/v/django-bitoptions.svg
