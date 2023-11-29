@@ -93,12 +93,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        python -m pip install coverage 'django${{ matrix.django }}' psycopg2cffi
+        python -m pip install coverage 'django${{ matrix.django }}' psycopg2cffi psycopg[binary]
     - name: Execute tests with coverage
       env:
         POSTGRES_HOST: localhost
         POSTGRES_PORT: 5432
         PGPASSWORD: postgres
+        DB: postgres
       run: |
         psql -c 'create database bitoptions;' -U postgres -h $POSTGRES_HOST
         coverage run --source=bitoptions testproject/manage.py test testapp

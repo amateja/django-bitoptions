@@ -70,10 +70,12 @@ elif DB == 'postgres':
     compat.register()
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'testproject',
-            'USER': 'travis',
-            'PASSWORD': '',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'localhost',
+            'PORT': 5432
         }
     }
 else:
