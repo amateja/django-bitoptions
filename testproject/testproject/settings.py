@@ -51,6 +51,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'testproject.wsgi.application'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 DB = os.environ.get('DB', 'sqlite')
 
 if DB in ['mariadb', 'mysql']:
@@ -58,8 +60,10 @@ if DB in ['mariadb', 'mysql']:
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'testproject',
-            'USER': 'travis',
-            'PASSWORD': '',
+            'USER': 'root',
+            'PASSWORD': 'password',
+            'HOST': '127.0.0.1',
+            'PORT': 3306
         }
     }
 elif DB == 'postgres':
@@ -68,10 +72,12 @@ elif DB == 'postgres':
     compat.register()
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'testproject',
-            'USER': 'travis',
-            'PASSWORD': '',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': '127.0.0.1',
+            'PORT': 5432
         }
     }
 else:

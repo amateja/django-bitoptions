@@ -125,7 +125,7 @@ class BitOptionFieldTests(TestCase):
         """
         widget = BitOptionsWidget(choices=TOPPINGS)
         html = widget.render('toppings', 131140, {'id': 'id_toppings'})
-        self.assertEqual(html.count('<li>'), len(TOPPINGS))
+        self.assertEqual(html.count('<input '), len(TOPPINGS))
         self.assertEqual(html.count(' checked'),
                          len(TOPPINGS.get_selected_values(131140)))
 
@@ -136,7 +136,7 @@ class BitOptionFieldTests(TestCase):
         TOPPINGS.value = 131140
         widget = BitOptionsWidget(choices=TOPPINGS)
         html = widget.render('toppings', TOPPINGS, {'id': 'id_toppings'})
-        self.assertEqual(html.count('<li>'), len(TOPPINGS))
+        self.assertEqual(html.count('<input '), len(TOPPINGS))
         self.assertEqual(html.count(' checked'),
                          len(TOPPINGS.get_selected_values(131140)))
 
