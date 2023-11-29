@@ -19,13 +19,55 @@ jobs:
         python -m pip install flake8 flake8-comprehensions flake8-eradicate flake8-pep3101 flake8-print flake8-quotes flake8-string-format
     - name: Lint with flake8
       run: flake8
-  test:
-    runs-on: ubuntu-latest
+
+  test_sqlite_4x:
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
-        django: ['>=4.1,<4.2', '>=4.2,<4.3']
+        python-version: ['3.8', '3.9', '3.10']
+        django: ['>=4.0,<4.1', '>=4.1,<4.2', '>=4.2,<5.0']
+        include:
+          - python-version: '3.12'
+            django: '>=4.2,<4.3'
+          - python-version: '3.11'
+            django: '>=4.2,<4.3'
+          - python-version: '3.11'
+            django: '>=4.1,<4.2'
+          - python-version: '3.7'
+            django: '>=3.2,<4.0'
+          - python-version: '3.6'
+            django: '>=3.2,<4.0'
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        python -m pip install coverage 'django${{ matrix.django }}'
+    - name: Execute tests with coverage
+      run: |
+        coverage run --source=bitoptions testproject/manage.py test testapp
+        coverage lcov
+        coverage report
+    - name: Coveralls
+      uses: coverallsapp/github-action@v2
+      with:
+        parallel: true
+
+  test_sqlite_3x:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.6', '3.7', '3.8', '3.9']
+        django: ['>=3.0,<3.1', '>=3.1,<3.2', '>=3.2,<4.0']
+        include:
+          - python-version: '3.10'
+            django: '>=3.2,<4.0'
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -48,7 +90,7 @@ jobs:
 
   generate-coverage-report:
     runs-on: ubuntu-latest
-    needs: [test]
+    needs: [test_sqlite_4x, test_sqlite_3x]
     steps:
       - name: Coveralls
         uses: coverallsapp/github-action@v2
