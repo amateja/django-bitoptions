@@ -45,16 +45,14 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        python -m pip install coverage 'django${{ matrix.django }}'
+        python -m pip install coveralls 'django${{ matrix.django }}'
     - name: Execute tests with coverage
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COVERALLS_PARALLEL: true
       run: |
         coverage run --source=bitoptions testproject/manage.py test testapp
-        coverage lcov
-        coverage report
-    - name: Coveralls
-      uses: coverallsapp/github-action@v2
-      with:
-        parallel: true
+        coveralls --service=github
 
   test_postgres_4x:
     runs-on: ubuntu-latest
@@ -73,17 +71,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.8', '3.9', '3.10']
-        django: ['>=4.0,<4.1', '>=4.1,<4.2', '>=4.2,<5.0']
-        include:
-          - python-version: '3.12'
-            django: '>=4.2,<4.3'
-          - python-version: '3.11'
-            django: '>=4.2,<4.3'
-          - python-version: '3.11'
-            django: '>=4.1,<4.2'
-          - python-version: '3.7'
-            django: '>=3.2,<4.0'
+        python-version: ['3.11']
+        django: ['>=4.1,<4.2', '>=4.2,<5.0']
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -93,21 +82,18 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        python -m pip install coverage 'django${{ matrix.django }}' psycopg2cffi psycopg[binary]
+        python -m pip install coveralls 'django${{ matrix.django }}' psycopg2cffi psycopg[binary]
     - name: Execute tests with coverage
       env:
         POSTGRES_HOST: localhost
         POSTGRES_PORT: 5432
         PGPASSWORD: postgres
         DB: postgres
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COVERALLS_PARALLEL: true
       run: |
         coverage run --source=bitoptions testproject/manage.py test testapp
-        coverage lcov
-        coverage report
-    - name: Coveralls
-      uses: coverallsapp/github-action@v2
-      with:
-        parallel: true
+        coveralls --service=github
 
   test_sqlite_3x:
     runs-on: ubuntu-20.04
@@ -128,16 +114,14 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        python -m pip install coverage 'django${{ matrix.django }}'
+        python -m pip install coveralls 'django${{ matrix.django }}'
     - name: Execute tests with coverage
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COVERALLS_PARALLEL: true
       run: |
         coverage run --source=bitoptions testproject/manage.py test testapp
-        coverage lcov
-        coverage report
-    - name: Coveralls
-      uses: coverallsapp/github-action@v2
-      with:
-        parallel: true
+        coveralls --service=github
 
   test_legacy:
     runs-on: ubuntu-20.04
@@ -160,16 +144,23 @@ jobs:
     - name: Execute tests with coverage
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COVERALLS_PARALLEL: true
       run: |
         coverage run --source=bitoptions testproject/manage.py test testapp
-        coverage report
-        coveralls
+        coveralls --service=github
 
   generate-coverage-report:
     runs-on: ubuntu-latest
     needs: [test_sqlite_4x, test_sqlite_3x, test_postgres_4x, test_legacy]
     steps:
-      - name: Coveralls
-        uses: coverallsapp/github-action@v2
-        with:
-          parallel-finished: true
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    - name: Coveralls
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COVERALLS_PARALLEL: true
+      run: |
+        python -m pip install coveralls
+        coveralls --service=github --finish
